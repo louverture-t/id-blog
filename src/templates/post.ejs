@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<%= description %>">
+    <title><%= title %> - Infectious Disease News</title>
+    <link rel="stylesheet" href="<%= basePath %>assets/css/main.min.css">
+    <link rel="icon" type="image/x-icon" href="<%= basePath %>assets/images/favicon.ico">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="<%= basePath %>index.html" class="brand-link">
+                        <span class="brand-icon">🦠</span>
+                        <span class="brand-text">Infectious Disease News</span>
+                    </a>
+                </div>
+                <ul class="navbar-menu">
+                    <li><a href="<%= basePath %>index.html">Home</a></li>
+                    <li><a href="#latest">Latest</a></li>
+                    <li><a href="#outbreaks">Outbreaks</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#prevention">Prevention</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <article class="post">
+            <div class="container">
+                <header class="post-header">
+                    <nav class="breadcrumb">
+                        <a href="index.html">Home</a> → <span class="current">Article</span>
+                    </nav>
+                    <div class="post-meta">
+                        <span class="category-badge <%= category.toLowerCase().replace(/\s+/g, '-') %>"><%= category %></span>
+                        <time class="post-date" datetime="<%= date %>"><%= date %></time>
+                        <span class="post-author">By <%= author %></span>
+                    </div>
+                    <h1 class="post-title"><%= title %></h1>
+                    <p class="post-description"><%= description %></p>
+                </header>
+
+                <div class="post-content">
+                    <%- content %>
+                </div>
+
+                <footer class="post-footer">
+                    <div class="post-tags">
+                        <span class="tag-label">Category:</span>
+                        <span class="tag <%= category.toLowerCase().replace(/\s+/g, '-') %>"><%= category %></span>
+                    </div>
+                    <div class="post-share">
+                        <span class="share-label">Share:</span>
+                        <a href="#" class="share-link twitter" onclick="shareOnTwitter()">Twitter</a>
+                        <a href="#" class="share-link facebook" onclick="shareOnFacebook()">Facebook</a>
+                        <a href="#" class="share-link linkedin" onclick="shareOnLinkedIn()">LinkedIn</a>
+                    </div>
+                </footer>
+
+                <nav class="post-navigation">
+                    <a href="index.html" class="nav-link back-to-home">← Back to Home</a>
+                </nav>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <p>Stay informed about infectious disease outbreaks, research breakthroughs, and public health updates from around the world.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#outbreaks">Disease Outbreaks</a></li>
+                        <li><a href="#research">Medical Research</a></li>
+                        <li><a href="#prevention">Prevention & Control</a></li>
+                        <li><a href="#vaccines">Vaccines</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://www.who.int/" target="_blank">WHO</a></li>
+                        <li><a href="https://www.cdc.gov/" target="_blank">CDC</a></li>
+                        <li><a href="https://www.ecdc.europa.eu/" target="_blank">ECDC</a></li>
+                        <li><a href="https://www.nejm.org/" target="_blank">NEJM</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <%= new Date().getFullYear() %> Infectious Disease News Blog. Built with Node.js & Grunt.js</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="<%= basePath %>assets/js/main.min.js"></script>
+</body>
+</html>

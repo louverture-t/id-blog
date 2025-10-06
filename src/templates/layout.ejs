@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<%= description %>">
+    <title><%= title %> - Infectious Disease News</title>
+    <link rel="stylesheet" href="<%= basePath %>assets/css/main.min.css">
+    <link rel="icon" type="image/x-icon" href="<%= basePath %>assets/images/favicon.ico">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/">
+    <meta property="og:title" content="<%= title %> - Infectious Disease News">
+    <meta property="og:description" content="<%= description %>">
+    <meta property="og:image" content="https://yourdomain.com/assets/images/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/">
+    <meta property="twitter:title" content="<%= title %> - Infectious Disease News">
+    <meta property="twitter:description" content="<%= description %>">
+    <meta property="twitter:image" content="https://youردomain.com/assets/images/og-image.jpg">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="<%= basePath %>index.html" class="brand-link">
+                        <span class="brand-icon">🦠</span>
+                        <span class="brand-text">Infectious Disease News</span>
+                    </a>
+                </div>
+                <ul class="navbar-menu">
+                    <li><a href="<%= basePath %>index.html">Home</a></li>
+                    <li><a href="#latest">Latest</a></li>
+                    <li><a href="#outbreaks">Outbreaks</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#prevention">Prevention</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <%- content %>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <p>Stay informed about infectious disease outbreaks, research breakthroughs, and public health updates from around the world.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#outbreaks">Disease Outbreaks</a></li>
+                        <li><a href="#research">Medical Research</a></li>
+                        <li><a href="#prevention">Prevention & Control</a></li>
+                        <li><a href="#vaccines">Vaccines</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://www.who.int/">WHO</a></li>
+                        <li><a href="https://www.cdc.gov/">CDC</a></li>
+                        <li><a href="https://www.ecdc.europa.eu/">ECDC</a></li>
+                        <li><a href="https://www.nejm.org/">NEJM</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <%= new Date().getFullYear() %> Infectious Disease News Blog. Built with Node.js & Grunt.js</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="<%= basePath %>assets/js/main.min.js"></script>
+</body>
+</html>

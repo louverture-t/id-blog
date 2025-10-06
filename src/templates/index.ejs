@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<%= description %>">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="<%= basePath %>assets/css/main.min.css">
+    <link rel="icon" type="image/x-icon" href="<%= basePath %>assets/images/favicon.ico">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="<%= basePath %>index.html" class="brand-link">
+                        <span class="brand-icon">🦠</span>
+                        <span class="brand-text">Infectious Disease News</span>
+                    </a>
+                </div>
+                <ul class="navbar-menu">
+                    <li><a href="<%= basePath %>index.html" class="active">Home</a></li>
+                    <li><a href="#latest">Latest</a></li>
+                    <li><a href="#outbreaks">Outbreaks</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#prevention">Prevention</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="hero-icon">🦠</span>
+                        Infectious Disease News
+                    </h1>
+                    <p class="hero-subtitle">Stay informed about the latest infectious disease outbreaks, research breakthroughs, and public health updates from around the world.</p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number"><%= posts.length %></span>
+                            <span class="stat-label">Articles</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Updates</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">Global</span>
+                            <span class="stat-label">Coverage</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest Posts Section -->
+        <section class="posts-section" id="latest">
+            <div class="container">
+                <h2 class="section-title">Latest News</h2>
+                
+                <% if (posts.length === 0) { %>
+                    <div class="no-posts">
+                        <h3>No articles yet</h3>
+                        <p>Create your first post using: <code>node index.js new-post "Your Article Title"</code></p>
+                    </div>
+                <% } else { %>
+                    <div class="posts-grid">
+                        <% posts.forEach((post, index) => { %>
+                            <article class="post-card <%= index === 0 ? 'featured' : '' %>">
+                                <div class="post-card-header">
+                                    <span class="category-badge <%= post.category.toLowerCase().replace(/\s+/g, '-') %>">
+                                        <%= post.category %>
+                                    </span>
+                                    <time class="post-date" datetime="<%= post.date %>">
+                                        <%= post.date %>
+                                    </time>
+                                </div>
+                                
+                                <div class="post-card-content">
+                                    <h3 class="post-card-title">
+                                        <a href="<%= post.href %>"><%= post.title %></a>
+                                    </h3>
+                                    <p class="post-card-description"><%= post.description %></p>
+                                </div>
+                                
+                                <div class="post-card-footer">
+                                    <span class="post-author">By <%= post.author %></span>
+                                    <a href="<%= post.href %>" class="read-more">Read More →</a>
+                                </div>
+                            </article>
+                        <% }); %>
+                    </div>
+                <% } %>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories-section">
+            <div class="container">
+                <h2 class="section-title">Categories</h2>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <div class="category-icon">🚨</div>
+                        <h3>Disease Outbreaks</h3>
+                        <p>Breaking news on emerging infectious disease outbreaks worldwide</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🔬</div>
+                        <h3>Medical Research</h3>
+                        <p>Latest research findings and clinical trial results</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🛡️</div>
+                        <h3>Prevention & Control</h3>
+                        <p>Public health measures and infection control strategies</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">💉</div>
+                        <h3>Vaccines</h3>
+                        <p>Vaccine development, distribution, and effectiveness studies</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alert Banner -->
+        <section class="alert-banner">
+            <div class="container">
+                <div class="alert-content">
+                    <span class="alert-icon">⚠️</span>
+                    <span class="alert-text">Always consult healthcare professionals for medical advice. This site is for informational purposes only.</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <p>Stay informed about infectious disease outbreaks, research breakthroughs, and public health updates from around the world.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#outbreaks">Disease Outbreaks</a></li>
+                        <li><a href="#research">Medical Research</a></li>
+                        <li><a href="#prevention">Prevention & Control</a></li>
+                        <li><a href="#vaccines">Vaccines</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://www.who.int/" target="_blank">WHO</a></li>
+                        <li><a href="https://www.cdc.gov/" target="_blank">CDC</a></li>
+                        <li><a href="https://www.ecdc.europa.eu/" target="_blank">ECDC</a></li>
+                        <li><a href="https://www.nejm.org/" target="_blank">NEJM</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <%= new Date().getFullYear() %> Infectious Disease News Blog. Built with Node.js & Grunt.js</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="<%= basePath %>assets/js/main.min.js"></script>
+</body>
+</html>
