@@ -4,7 +4,8 @@
   "description": "A Node.js-based static site generator for an infectious disease news blog",
   "main": "index.js",
   "scripts": {
-    "build": "node index.js build",
+    "build": "grunt",
+    "build:site": "node index.js build",
     "dev": "grunt dev",
     "dev-simple": "node server.js",
     "serve": "grunt serve",

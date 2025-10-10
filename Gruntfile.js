@@ -75,7 +75,18 @@ module.exports = function(grunt) {
                     base: 'docs',
                     hostname: 'localhost',
                     livereload: 35730, // Use different port to avoid conflicts
-                    open: true
+                    open: true,
+                    // Ensure dev always serves the latest files (no browser cache)
+                    middleware: function(connect, options, middlewares) {
+                        middlewares.unshift(function noCache(req, res, next) {
+                            res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+                            res.setHeader('Pragma', 'no-cache');
+                            res.setHeader('Expires', '0');
+                            res.setHeader('Surrogate-Control', 'no-store');
+                            next();
+                        });
+                        return middlewares;
+                    }
                 }
             }
         },
@@ -95,7 +106,7 @@ module.exports = function(grunt) {
             },
             images: {
                 files: ['src/assets/images/**/*.{png,jpg,jpeg,gif,svg}'],
-                tasks: ['newer:imagemin']
+                tasks: ['newer:imagemin', 'newer:copy:images']
             },
             content: {
                 files: ['src/content/**/*.md', 'src/content/posts/**/*.md', 'src/templates/**/*.ejs'],
@@ -128,12 +139,15 @@ module.exports = function(grunt) {
         'sass',
         'cssmin',
         'uglify',
-        'imagemin'
+        'imagemin',
+        'copy:images'
     ]);
 
+    // "serve" should behave like a dev server that keeps rebuilding and reloading
     grunt.registerTask('serve', [
         'default',
-        'connect:server:keepalive'
+        'connect:server',
+        'watch'
     ]);
 
     grunt.registerTask('dev', [
@@ -148,6 +162,7 @@ module.exports = function(grunt) {
         'sass',
         'cssmin',
         'uglify',
-        'imagemin'
+        'imagemin',
+        'copy:images'
     ]);
 };

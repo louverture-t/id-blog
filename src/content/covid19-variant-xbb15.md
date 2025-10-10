@@ -1,7 +1,7 @@
 ---
 title: "COVID-19 Variant XBB.1.5 Shows Increased Transmissibility"
 date: "2025-10-05"
-author: "Dr. Sarah Johnson"
+author: "Joseph Dekole Etienne"
 category: "Breaking News"
 description: "New research reveals that the COVID-19 variant XBB.1.5 demonstrates significantly higher transmissibility rates compared to previous strains"
 ---

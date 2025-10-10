@@ -22,11 +22,8 @@ class InfectiousDiseaseGenerator {
         console.log('🦠 Building Infectious Disease Blog...');
         
         try {
-            // Clean output directory
-            await fs.emptyDir(this.outputDir);
-            
-            // Copy assets
-            await this.copyAssets();
+            // Clean only HTML outputs (keep compiled assets intact)
+            await this.cleanHtmlOutputs();
             
             // Generate pages
             await this.generatePages();
@@ -41,10 +38,21 @@ class InfectiousDiseaseGenerator {
         }
     }
 
-    async copyAssets() {
-        const assetsOutput = path.join(this.outputDir, 'assets');
-        await fs.copy(this.assetsDir, assetsOutput);
-        console.log('📁 Assets copied');
+    // Remove previously generated HTML files while preserving assets
+    async cleanHtmlOutputs() {
+        // Remove root-level HTML files
+        const entries = await fs.readdir(this.outputDir).catch(() => []);
+        for (const name of entries) {
+            const full = path.join(this.outputDir, name);
+            const stat = await fs.stat(full);
+            if (stat.isFile() && name.endsWith('.html')) {
+                await fs.remove(full);
+            }
+        }
+        // Remove posts HTML directory
+        await fs.remove(this.postsOutputDir).catch(() => {});
+        await fs.ensureDir(this.postsOutputDir);
+        console.log('🧹 Cleaned HTML outputs');
     }
 
     async generatePages() {
@@ -115,8 +123,23 @@ class InfectiousDiseaseGenerator {
         } catch (error) {
             console.log('Posts directory not found or empty');
         }
-        
-        return allFiles;
+
+        // Deduplicate by slug; prefer entries from posts/ over root/
+        const bySlug = new Map();
+        for (const fi of allFiles) {
+            const slug = path.basename(fi.fileName, '.md');
+            const existing = bySlug.get(slug);
+            if (!existing) {
+                bySlug.set(slug, fi);
+            } else {
+                // Prefer posts directory when duplicate slugs exist
+                if (existing.directory === 'root' && fi.directory === 'posts') {
+                    bySlug.set(slug, fi);
+                }
+            }
+        }
+
+        return Array.from(bySlug.values());
     }
 
     async generateIndex() {
@@ -165,8 +188,8 @@ class InfectiousDiseaseGenerator {
             return;
         }
 
-        // Determine output directory
-        const usePostsDir = options.posts || false;
+    // Determine output directory (default to posts directory unless explicitly disabled)
+    const usePostsDir = (typeof options.posts === 'undefined') ? true : Boolean(options.posts);
         const outputDir = usePostsDir ? this.postsDir : this.contentDir;
         const dirName = usePostsDir ? 'posts' : 'content';
 
@@ -184,9 +207,10 @@ class InfectiousDiseaseGenerator {
             return;
         }
         
-        const template = `---
+    const template = `---
+type: "post"
 title: "${title}"
-date: "${new Date().toDateString()}"
+date: "${new Date().toISOString().slice(0, 10)}"
 author: "Disease Reporter"
 category: "Breaking News"
 description: "Latest updates on ${title}"
@@ -257,7 +281,8 @@ program
     .command('new-post')
     .description('Create a new blog post')
     .argument('<title>', 'Post title')
-    .option('-p, --posts', 'Create post in src/content/posts/ directory')
+    .option('-p, --posts', 'Create post in src/content/posts/ directory (default)')
+    .option('--no-posts', 'Create post in src/content/ (root)')
     .action(async (title, options) => {
         const generator = new InfectiousDiseaseGenerator();
         await generator.newPost(title, options);
@@ -272,9 +297,13 @@ if (require.main === module) {
     } else if (args[0] === 'new-post' && args[1]) {
         const generator = new InfectiousDiseaseGenerator();
         const title = args.slice(1).filter(arg => !arg.startsWith('-')).join(' ');
-        const options = {
-            posts: args.includes('--posts') || args.includes('-p')
-        };
+        // Determine posts option: --no-posts forces root, --posts/-p forces posts, otherwise undefined (default handled in newPost)
+        const options = {};
+        if (args.includes('--no-posts')) {
+            options.posts = false;
+        } else if (args.includes('--posts') || args.includes('-p')) {
+            options.posts = true;
+        } // else leave undefined for default-to-posts
         generator.newPost(title, options);
     } else {
         program.parse();

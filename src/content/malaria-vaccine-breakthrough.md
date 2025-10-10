@@ -1,7 +1,7 @@
 ---
 title: "Breakthrough in Malaria Vaccine Development"
 date: "2025-10-04"
-author: "Dr. Michael Chen"
+author: "Dr. Joseph Etienne"
 category: "Research"
 description: "Scientists achieve 95% efficacy rate in Phase III trials of new malaria vaccine, offering hope for disease eradication"
 ---
