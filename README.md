@@ -1,444 +1,211 @@
-# 🦠 Infectious Disease News Blog
+# Infectious Disease News Blog
 
-A Node.js-based static site generator specifically designed for infectious disease news and updates, featuring modern web development tools and automated build processes.
+A Node.js static site generator for infectious disease news and updates, built with EJS templates, Marked.js, Grunt, and SASS.
 
-## ✨ Features
+## Features
 
-- **📝 Markdown to HTML Conversion**: Write content in Markdown and automatically generate HTML pages
-- **🎨 Responsive Design**: Modern, mobile-first design with infectious disease theme
-- **⚡ Build Automation**: Grunt.js tasks for SASS compilation, minification, and optimization
-- **🔄 Live Reloading**: Development server with automatic browser refresh
-- **📱 SEO Optimized**: Meta tags, Open Graph, and Twitter Cards support
-- **🔍 Search Functionality**: Client-side search through articles
-- **📊 Analytics Ready**: Built-in tracking for page views and user interactions
-- **🎯 Category System**: Organize content by disease type and news category
-- **📲 Social Sharing**: Built-in social media sharing buttons
-- **🌙 Theme Toggle**: Dark/light mode support
-- **📧 Newsletter Signup**: Email subscription functionality (demo)
+- **Markdown to HTML**: Write posts in Markdown with YAML frontmatter
+- **Responsive Design**: Mobile-first layout with hamburger navigation
+- **Build Automation**: Grunt pipeline for SASS compilation, JS/CSS minification, and image optimization
+- **Live Reloading**: Development server with file watching
+- **SEO**: Open Graph, Twitter Cards, JSON-LD structured data, sitemap.xml, RSS feed
+- **Pagination**: Index page paginates at 6 posts per page
+- **Tag System**: Auto-generated tag pages from post frontmatter
+- **Related Posts**: Shows up to 3 related articles based on shared tags
+- **Search**: Client-side article search
+- **Social Sharing**: Twitter, Facebook, LinkedIn, copy link
+- **Dark/Light Mode**: Theme toggle with localStorage persistence
+- **404 Page**: Styled error page for missing routes
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
-infectious-disease-blog/
-├── src/                          # Source files
-│   ├── content/                  # Markdown blog posts
-│   │   ├── covid19-variant-xbb15.md
-│   │   ├── malaria-vaccine-breakthrough.md
-│   │   └── hand-hygiene-prevention.md
-│   ├── templates/                # EJS templates
-│   │   ├── index.ejs            # Homepage template
-│   │   ├── post.ejs             # Individual post template
-│   │   └── layout.ejs           # Base layout (optional)
-│   └── assets/                   # Static assets
-│       ├── css/
-│       │   └── main.scss        # Main SASS stylesheet
-│       ├── js/
-│       │   └── main.js          # JavaScript functionality
-│       └── images/              # Image assets
-├── docs/                         # Generated static site (output)
-├── Gruntfile.js                  # Grunt task configuration
-├── package.json                  # Dependencies and scripts
-├── index.js                      # Main site generator
-└── README.md                     # This file
+id-blog/
+├── src/
+│   ├── content/              # Markdown blog posts
+│   │   ├── posts/            # Posts subdirectory (default for new posts)
+│   │   └── *.md              # Root-level content
+│   ├── templates/            # EJS templates
+│   │   ├── index.ejs         # Homepage with pagination
+│   │   ├── post.ejs          # Individual post page
+│   │   ├── layout.ejs        # Shared layout (navbar, footer, meta)
+│   │   ├── tag.ejs           # Tag listing page
+│   │   └── 404.ejs           # Error page
+│   └── assets/
+│       ├── css/main.scss     # SASS stylesheet
+│       ├── js/main.js        # Client-side JavaScript
+│       └── images/           # Image assets
+├── docs/                     # Generated output (deployed to GitHub Pages)
+├── test/                     # Jest test suite
+├── site.config.json          # Site URL and metadata config
+├── Gruntfile.js              # Grunt task configuration
+├── index.js                  # Static site generator
+├── server.js                 # Express dev server
+├── .eslintrc.json            # ESLint config
+├── .prettierrc               # Prettier config
+└── .github/workflows/
+    └── deploy.yml            # GitHub Actions CI/CD
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn package manager
+- Node.js v18+
+- npm
 
 ### Installation
 
-1. **Clone or download the project**
-   ```bash
-   cd week6-capstoneBlog
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Build the site**
-   ```bash
-   npm run build
-   ```
-
-4. **Start development server**
-   ```bash
-   npm run dev
-   ```
-
-5. **Open your browser**
-   Navigate to `http://localhost:3000` to view your blog
-
-## 📝 Creating Content
-
-### Creating a New Post
-
-Use the built-in CLI to create new posts:
-
 ```bash
-# Create a new post
-npm run new-post "Your Post Title"
-
-# Or use Node.js directly
-node index.js new-post "Ebola Outbreak Update"
+npm install
 ```
 
-This creates a new Markdown file in `src/content/` with the following frontmatter:
+### Build
+
+```bash
+npm run build
+```
+
+This runs the Grunt pipeline (SASS, minify, copy assets) then generates all HTML pages, sitemap, RSS feed, tag pages, and 404 page into `docs/`.
+
+### Development
+
+```bash
+npm run dev
+```
+
+Starts a dev server at `http://localhost:3000` with live reload and file watching.
+
+## Creating Posts
+
+```bash
+# Create in src/content/posts/ (default)
+npm run new-blog "Ebola Outbreak Update"
+
+# Create in src/content/ (root)
+node index.js new-post "Post Title" --no-posts
+```
+
+### Frontmatter
 
 ```markdown
 ---
+type: "post"
 title: "Your Post Title"
 date: "2025-10-05"
-author: "Disease Reporter"
+author: "ID Blog Team"
 category: "Breaking News"
-description: "Latest updates on Your Post Title"
+description: "Brief description for SEO"
+tags: ["infectious-disease", "health", "news"]
 ---
-
-# Your Post Title
-
-Write your infectious disease news content here...
 ```
 
-### Frontmatter Options
+| Field         | Required | Description                                        |
+|---------------|----------|----------------------------------------------------|
+| `title`       | Yes      | Post title                                         |
+| `date`        | Yes      | Publication date (YYYY-MM-DD)                      |
+| `author`      | No       | Author name (default: "ID Blog Team")              |
+| `category`    | No       | Category badge (Breaking News, Research, etc.)     |
+| `description` | No       | SEO description and excerpt                        |
+| `tags`        | No       | Array of tags for tag pages and related posts       |
 
-Configure your posts with these frontmatter fields:
+## Available Scripts
 
-- **title**: Post title (required)
-- **date**: Publication date
-- **author**: Author name
-- **category**: Content category (Breaking News, Research, Prevention, Vaccines)
-- **description**: SEO description and excerpt
+| Script             | Command                | Description                              |
+|--------------------|------------------------|------------------------------------------|
+| `npm run build`    | `grunt`                | Full build (Grunt + site generation)     |
+| `npm run build:site` | `node index.js build` | Site generation only (no Grunt)         |
+| `npm run dev`      | `grunt dev`            | Dev server with live reload              |
+| `npm run dev-simple` | `node server.js`     | Simple Express dev server                |
+| `npm test`         | `jest`                 | Run test suite                           |
+| `npm run lint`     | `eslint .`             | Lint JavaScript files                    |
+| `npm run format`   | `prettier --write .`   | Format code with Prettier                |
+| `npm run new-blog` | `node index.js new-post --posts` | Create new post             |
 
-### Supported Categories
+## Configuration
 
-The blog includes predefined styles for these categories:
+### site.config.json
 
-- **Breaking News** (🚨): Urgent disease outbreaks and alerts
-- **Research** (🔬): Medical research and clinical studies
-- **Prevention** (🛡️): Public health measures and guidelines
-- **Vaccines** (💉): Vaccine development and distribution news
-- **General**: Other infectious disease content
-
-## 🛠️ Development Workflow
-
-### Available Scripts
-
-```bash
-# Build the static site
-npm run build
-
-# Start development server with live reload
-npm run dev
-
-# Create a new blog post
-npm run new-post "Post Title"
-
-# Run Grunt tasks
-npm start
+```json
+{
+  "siteUrl": "https://id-blog.github.io",
+  "siteName": "Infectious Disease News",
+  "siteDescription": "Latest infectious disease news and updates"
+}
 ```
 
-### Grunt Tasks
+`siteUrl` is used in meta tags, sitemap, RSS feed, and JSON-LD structured data. No trailing slash.
 
-The project includes comprehensive Grunt automation:
+### SASS Variables
 
-- **SASS Compilation**: `src/assets/css/main.scss` → `docs/assets/css/main.css`
-- **CSS Minification**: Creates `main.min.css` for production
-- **JavaScript Minification**: Minifies and combines JS files
-- **Image Optimization**: Compresses images for web delivery
-- **Live Reloading**: Automatic browser refresh during development
-- **File Watching**: Monitors changes and rebuilds automatically
-
-### Development Server
-
-The development server includes:
-
-- **Port**: 3000 (configurable in Gruntfile.js)
-- **Live Reload**: Automatic browser refresh
-- **Base Directory**: `docs/` (generated output)
-- **Auto-open**: Opens browser automatically
-
-## 🎨 Customization
-
-### Styling
-
-Modify the SASS variables in `src/assets/css/main.scss`:
+Customize colors and layout in `src/assets/css/main.scss`:
 
 ```scss
-// Brand colors
-$primary-color: #e74c3c;      // Red for alerts/danger
-$secondary-color: #34495e;    // Dark blue-gray
-$accent-color: #3498db;       // Blue for links
-$success-color: #27ae60;      // Green for success
-$warning-color: #f39c12;      // Orange for warnings
-
-// Typography
-$font-family-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-// Layout
+$primary-color: #e74c3c;       // Red — alerts/danger
+$secondary-color: #34495e;     // Dark blue-gray
+$accent-color: #3498db;        // Blue — links/buttons
+$success-color: #27ae60;       // Green
+$warning-color: #f39c12;       // Orange
 $container-max-width: 1200px;
-$border-radius: 8px;
 ```
 
-### Templates
+## Build Output
 
-Customize the EJS templates in `src/templates/`:
+The `docs/` directory contains the complete static site:
 
-- **index.ejs**: Homepage layout and post listing
-- **post.ejs**: Individual post page layout
-- **layout.ejs**: Shared layout components (optional base template)
-
-### JavaScript Features
-
-The `src/assets/js/main.js` includes:
-
-- Search functionality
-- Social sharing
-- Theme toggle
-- Newsletter signup
-- Reading progress indicator
-- Lazy loading
-- Analytics tracking
-
-## 📊 Content Management
-
-### Blog Post Structure
-
-Each Markdown file supports:
-
-- **Headers**: H1-H6 with automatic styling
-- **Lists**: Bulleted and numbered lists
-- **Links**: Internal and external links
-- **Images**: Responsive image handling
-- **Code**: Inline and block code formatting
-- **Blockquotes**: Styled quotations
-- **Tables**: Responsive table layouts
-
-### SEO Features
-
-Built-in SEO optimization includes:
-
-- Meta descriptions from frontmatter
-- Open Graph tags for social sharing
-- Twitter Card support
-- Semantic HTML structure
-- Clean URLs
-- Sitemap generation (can be added)
-
-## 🌐 Deployment
-
-### GitHub Pages
-
-1. **Build the site**
-   ```bash
-   npm run build
-   ```
-
-2. **Commit the docs/ folder**
-   ```bash
-   git add docs/
-   git commit -m "Update site build"
-   git push
-   ```
-
-3. **Configure GitHub Pages**
-   - Go to repository settings
-   - Set source to `docs/` folder
-   - Your site will be available at `https://username.github.io/repository`
-
-### Other Hosting Platforms
-
-The generated `docs/` folder can be deployed to:
-
-- **Netlify**: Drag and drop the docs/ folder
-- **Vercel**: Connect your GitHub repository
-- **AWS S3**: Upload docs/ contents to S3 bucket
-- **Traditional Web Hosting**: Upload via FTP
-
-## 🔧 Configuration
-
-### Grunt Configuration
-
-Modify `Gruntfile.js` to customize build tasks:
-
-```javascript
-// Example: Change output paths
-sass: {
-    dist: {
-        files: {
-            'docs/assets/css/styles.css': 'src/assets/css/main.scss'
-        }
-    }
-}
-
-// Example: Add new tasks
-copy: {
-    fonts: {
-        expand: true,
-        cwd: 'src/assets/fonts/',
-        src: ['**/*'],
-        dest: 'docs/assets/fonts/'
-    }
-}
+```
+docs/
+├── index.html                 # Page 1 of posts
+├── page/2.html                # Page 2+ (if enough posts)
+├── posts/*.html               # Individual post pages
+├── tags/*.html                # Tag listing pages
+├── 404.html                   # Error page
+├── sitemap.xml                # XML sitemap
+├── feed.xml                   # RSS 2.0 feed
+└── assets/                    # Compiled CSS, JS, images
 ```
 
-### Site Generator Options
+## Deployment
 
-Customize the site generator in `index.js`:
+### GitHub Pages (Automated)
 
-```javascript
-class InfectiousDiseaseGenerator {
-    constructor() {
-        // Customize paths
-        this.srcDir = path.join(__dirname, 'src');
-        this.outputDir = path.join(__dirname, 'dist'); // Change output
-        
-        // Add custom processing
-        this.customOptions = {
-            dateFormat: 'YYYY-MM-DD',
-            excerptLength: 150,
-            postsPerPage: 10
-        };
-    }
-}
+Push to `main` triggers the GitHub Actions workflow which builds and deploys to GitHub Pages automatically.
+
+### Manual
+
+1. `npm run build`
+2. Deploy the `docs/` folder to any static hosting (Netlify, Vercel, S3, etc.)
+
+## Testing
+
+```bash
+npm test
 ```
 
-## 🧪 Advanced Features
+26 tests covering:
+- Site config validation
+- Frontmatter parsing across all markdown files
+- Markdown to HTML conversion
+- Generator class instantiation and methods
+- Template existence and correctness
+- Tag system, related posts, JSON-LD, placeholder cleanup
 
-### Custom Post Types
-
-Extend the generator to support different content types:
-
-```javascript
-// In index.js
-async generatePages() {
-    // Handle different content types
-    const contentTypes = ['posts', 'pages', 'alerts'];
-    // Implementation here
-}
-```
-
-### Plugin System
-
-Add custom plugins for additional functionality:
-
-```javascript
-// Example plugin structure
-const plugins = [
-    require('./plugins/rss-generator'),
-    require('./plugins/sitemap-generator'),
-    require('./plugins/search-index')
-];
-```
-
-### API Integration
-
-Connect to external APIs for live data:
-
-```javascript
-// Example: WHO disease outbreak API
-async fetchLiveOutbreaks() {
-    const response = await fetch('https://disease-api.who.int/outbreaks');
-    const data = await response.json();
-    // Process and display data
-}
-```
-
-## 🤝 Contributing
-
-### Development Setup
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-### Code Style
-
-- Use ES6+ JavaScript features
-- Follow existing SASS/CSS conventions
-- Write semantic HTML
-- Include JSDoc comments for functions
-- Test on multiple browsers
-
-### Content Guidelines
-
-For infectious disease content:
+## Content Guidelines
 
 - Cite authoritative sources (WHO, CDC, peer-reviewed journals)
 - Include publication dates
 - Use clear, accessible language
 - Provide context for technical terms
-- Include relevant links and references
 
-## 📚 Resources
+## Resources
 
-### Infectious Disease Sources
+- [WHO](https://www.who.int/) | [CDC](https://www.cdc.gov/) | [ECDC](https://www.ecdc.europa.eu/)
+- [Node.js](https://nodejs.org/docs/) | [Grunt.js](https://gruntjs.com/) | [EJS](https://ejs.co/) | [Marked](https://marked.js.org/) | [SASS](https://sass-lang.com/guide)
 
-- [World Health Organization (WHO)](https://www.who.int/)
-- [Centers for Disease Control (CDC)](https://www.cdc.gov/)
-- [European Centre for Disease Prevention and Control (ECDC)](https://www.ecdc.europa.eu/)
-- [New England Journal of Medicine](https://www.nejm.org/)
-- [The Lancet Infectious Diseases](https://www.thelancet.com/journals/laninf)
+## License
 
-### Technical Documentation
-
-- [Node.js Documentation](https://nodejs.org/docs/)
-- [Grunt.js Guide](https://gruntjs.com/getting-started)
-- [EJS Template Engine](https://ejs.co/)
-- [Marked Markdown Parser](https://marked.js.org/)
-- [SASS/SCSS Guide](https://sass-lang.com/guide)
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**Build Fails**
-```bash
-# Clear node_modules and reinstall
-rm -rf node_modules package-lock.json
-npm install
-```
-
-**SASS Compilation Errors**
-- Check syntax in `main.scss`
-- Ensure all imports exist
-- Verify variable declarations
-
-**Template Errors**
-- Check EJS syntax in templates
-- Ensure all variables are defined
-- Validate file paths
-
-**Live Reload Not Working**
-- Check if port 3000 is available
-- Verify Grunt watch task configuration
-- Restart the development server
-
-### Performance Optimization
-
-- Optimize images before adding to `src/assets/images/`
-- Minimize custom CSS/JS additions
-- Use CDN for external resources
-- Enable GZIP compression on server
-- Monitor bundle sizes
-
-## 📄 License
-
-This project is licensed under the MIT License. See LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- World Health Organization for disease classification guidelines
-- Centers for Disease Control for prevention best practices
-- Open source community for tools and libraries
-- Medical professionals providing accurate information
+MIT
 
 ---
 
-**⚠️ Medical Disclaimer**: This blog is for informational purposes only. Always consult healthcare professionals for medical advice. Content should be verified against official health authority sources.
+**Disclaimer**: This blog is for informational purposes only. Always consult healthcare professionals for medical advice. Verify content against official health authority sources.
