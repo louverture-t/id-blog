@@ -40,7 +40,7 @@ Recommendations for the public...
 
 ## References
 
-- [Source 1](https://example.com)
-- [Source 2](https://example.com)
+- [WHO Disease Outbreak News](https://www.who.int/emergencies/disease-outbreak-news)
+- [CDC Emerging Infections](https://www.cdc.gov/ncezid/)
 - World Health Organization
 - Centers for Disease Control and Prevention

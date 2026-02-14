@@ -7,20 +7,6 @@
     <title><%= title %> - Infectious Disease News</title>
     <link rel="stylesheet" href="<%= basePath %>assets/css/main.min.css">
     <link rel="icon" type="image/x-icon" href="<%= basePath %>assets/images/favicon.ico">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="<%= siteUrl %>/">
-    <meta property="og:title" content="<%= title %> - Infectious Disease News">
-    <meta property="og:description" content="<%= description %>">
-    <meta property="og:image" content="<%= siteUrl %>/assets/images/og-image.jpg">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="<%= siteUrl %>/">
-    <meta property="twitter:title" content="<%= title %> - Infectious Disease News">
-    <meta property="twitter:description" content="<%= description %>">
-    <meta property="twitter:image" content="<%= siteUrl %>/assets/images/og-image.jpg">
 </head>
 <body>
     <header class="header">
@@ -49,7 +35,49 @@
     </header>
 
     <main class="main-content">
-        <%- content %>
+        <section class="posts-section" id="latest">
+            <div class="container">
+                <h2 class="section-title">Posts tagged &ldquo;<%= tag %>&rdquo;</h2>
+
+                <% if (posts.length === 0) { %>
+                    <div class="no-posts">
+                        <h3>No articles with this tag yet</h3>
+                        <p><a href="<%= basePath %>index.html">&larr; Back to Home</a></p>
+                    </div>
+                <% } else { %>
+                    <div class="posts-grid">
+                        <% posts.forEach(function(post, index) { %>
+                            <article class="post-card">
+                                <div class="post-card-header">
+                                    <span class="category-badge <%= post.category.toLowerCase().replace(/\s+/g, '-') %>">
+                                        <%= post.category %>
+                                    </span>
+                                    <time class="post-date" datetime="<%= post.date %>">
+                                        <%= post.date %>
+                                    </time>
+                                </div>
+
+                                <div class="post-card-content">
+                                    <h3 class="post-card-title">
+                                        <a href="<%= post.href %>"><%= post.title %></a>
+                                    </h3>
+                                    <p class="post-card-description"><%= post.description %></p>
+                                </div>
+
+                                <div class="post-card-footer">
+                                    <span class="post-author">By <%= post.author %></span>
+                                    <a href="<%= post.href %>" class="read-more">Read More &rarr;</a>
+                                </div>
+                            </article>
+                        <% }); %>
+                    </div>
+                <% } %>
+
+                <nav class="post-navigation" style="margin-top: 2rem;">
+                    <a href="<%= basePath %>index.html" class="nav-link back-to-home">&larr; Back to Home</a>
+                </nav>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -71,10 +99,10 @@
                 <div class="footer-section">
                     <h3>Resources</h3>
                     <ul>
-                        <li><a href="https://www.who.int/">WHO</a></li>
-                        <li><a href="https://www.cdc.gov/">CDC</a></li>
-                        <li><a href="https://www.ecdc.europa.eu/">ECDC</a></li>
-                        <li><a href="https://www.nejm.org/">NEJM</a></li>
+                        <li><a href="https://www.who.int/" target="_blank">WHO</a></li>
+                        <li><a href="https://www.cdc.gov/" target="_blank">CDC</a></li>
+                        <li><a href="https://www.ecdc.europa.eu/" target="_blank">ECDC</a></li>
+                        <li><a href="https://www.nejm.org/" target="_blank">NEJM</a></li>
                     </ul>
                 </div>
             </div>

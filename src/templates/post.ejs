@@ -7,6 +7,26 @@
     <title><%= title %> - Infectious Disease News</title>
     <link rel="stylesheet" href="<%= basePath %>assets/css/main.min.css">
     <link rel="icon" type="image/x-icon" href="<%= basePath %>assets/images/favicon.ico">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "<%= title.replace(/"/g, '\\"') %>",
+        "datePublished": "<%= date %>",
+        "author": {
+            "@type": "Person",
+            "name": "<%= author.replace(/"/g, '\\"') %>"
+        },
+        "description": "<%= description.replace(/"/g, '\\"') %>",
+        "url": "<%= siteUrl %>/<%= typeof slug !== 'undefined' ? (basePath ? 'posts/' + slug : slug) : '' %>.html",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Infectious Disease News"
+        }
+    }
+    </script>
 </head>
 <body>
     <header class="header">
@@ -18,6 +38,11 @@
                         <span class="brand-text">Infectious Disease News</span>
                     </a>
                 </div>
+                <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <ul class="navbar-menu">
                     <li><a href="<%= basePath %>index.html">Home</a></li>
                     <li><a href="#latest">Latest</a></li>
@@ -34,7 +59,7 @@
             <div class="container">
                 <header class="post-header">
                     <nav class="breadcrumb">
-                        <a href="index.html">Home</a> → <span class="current">Article</span>
+                        <a href="<%= basePath %>index.html">Home</a> &rarr; <span class="current">Article</span>
                     </nav>
                     <div class="post-meta">
                         <span class="category-badge <%= category.toLowerCase().replace(/\s+/g, '-') %>"><%= category %></span>
@@ -51,8 +76,14 @@
 
                 <footer class="post-footer">
                     <div class="post-tags">
-                        <span class="tag-label">Category:</span>
-                        <span class="tag <%= category.toLowerCase().replace(/\s+/g, '-') %>"><%= category %></span>
+                        <span class="tag-label">Tags:</span>
+                        <% if (typeof tags !== 'undefined' && tags.length > 0) { %>
+                            <% tags.forEach(function(tag) { %>
+                                <a href="<%= basePath %>tags/<%= tag.toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/(^-|-$)/g, '') %>.html" class="tag-badge"><%= tag %></a>
+                            <% }); %>
+                        <% } else { %>
+                            <span class="tag <%= category.toLowerCase().replace(/\s+/g, '-') %>"><%= category %></span>
+                        <% } %>
                     </div>
                     <div class="post-share">
                         <span class="share-label">Share:</span>
@@ -62,8 +93,26 @@
                     </div>
                 </footer>
 
+                <% if (typeof relatedPosts !== 'undefined' && relatedPosts.length > 0) { %>
+                <section class="related-posts">
+                    <h2 class="related-posts-title">Related Articles</h2>
+                    <div class="related-posts-grid">
+                        <% relatedPosts.forEach(function(rp) { %>
+                        <article class="related-post-card">
+                            <h3 class="related-post-card-title">
+                                <a href="<%= rp.href %>"><%= rp.title %></a>
+                            </h3>
+                            <time class="post-date" datetime="<%= rp.date %>"><%= rp.date %></time>
+                            <p class="related-post-card-description"><%= rp.description %></p>
+                            <a href="<%= rp.href %>" class="read-more">Read More &rarr;</a>
+                        </article>
+                        <% }); %>
+                    </div>
+                </section>
+                <% } %>
+
                 <nav class="post-navigation">
-                    <a href="index.html" class="nav-link back-to-home">← Back to Home</a>
+                    <a href="<%= basePath %>index.html" class="nav-link back-to-home">&larr; Back to Home</a>
                 </nav>
             </div>
         </article>

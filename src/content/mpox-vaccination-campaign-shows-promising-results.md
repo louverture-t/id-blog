@@ -4,6 +4,7 @@ date: "Sun Oct 05 2025"
 author: "Disease Reporter"
 category: "Breaking News"
 description: "Latest updates on Mpox Vaccination Campaign Shows Promising Results"
+tags: ["mpox", "vaccines", "health"]
 ---
 
 # Mpox Vaccination Campaign Shows Promising Results

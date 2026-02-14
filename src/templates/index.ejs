@@ -18,6 +18,11 @@
                         <span class="brand-text">Infectious Disease News</span>
                     </a>
                 </div>
+                <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <ul class="navbar-menu">
                     <li><a href="<%= basePath %>index.html" class="active">Home</a></li>
                     <li><a href="#latest">Latest</a></li>
@@ -41,7 +46,7 @@
                     <p class="hero-subtitle">Stay informed about the latest infectious disease outbreaks, research breakthroughs, and public health updates from around the world.</p>
                     <div class="hero-stats">
                         <div class="stat">
-                            <span class="stat-number"><%= posts.length %></span>
+                            <span class="stat-number"><%= typeof allPosts !== 'undefined' ? allPosts.length : posts.length %></span>
                             <span class="stat-label">Articles</span>
                         </div>
                         <div class="stat">
@@ -94,6 +99,23 @@
                             </article>
                         <% }); %>
                     </div>
+
+                    <% if (typeof totalPages !== 'undefined' && totalPages > 1) { %>
+                    <nav class="pagination">
+                        <% if (prevPage) { %>
+                            <a href="<%= prevPage %>" class="pagination-btn pagination-prev">&larr; Previous</a>
+                        <% } else { %>
+                            <span class="pagination-btn pagination-prev disabled">&larr; Previous</span>
+                        <% } %>
+                        <span class="pagination-info">Page <%= currentPage %> of <%= totalPages %></span>
+                        <% if (nextPage) { %>
+                            <a href="<%= nextPage %>" class="pagination-btn pagination-next">Next &rarr;</a>
+                        <% } else { %>
+                            <span class="pagination-btn pagination-next disabled">Next &rarr;</span>
+                        <% } %>
+                    </nav>
+                    <% } %>
+
                 <% } %>
             </div>
         </section>

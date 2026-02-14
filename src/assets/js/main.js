@@ -2,6 +2,8 @@
 (function() {
     'use strict';
 
+    const DEBUG = false;
+
     // DOM Content Loaded
     document.addEventListener('DOMContentLoaded', function() {
         initializeApp();
@@ -9,14 +11,37 @@
 
     function initializeApp() {
         // Initialize all components
+        initMobileMenu();
         initSmoothScrolling();
         initSearchFunctionality();
         initSocialSharing();
         initThemeToggle();
         initNewsletterSignup();
         initAnalytics();
-        
-        console.log('🦠 Infectious Disease Blog initialized');
+
+        if (DEBUG) console.log('🦠 Infectious Disease Blog initialized');
+    }
+
+    // Mobile hamburger menu toggle
+    function initMobileMenu() {
+        var toggle = document.querySelector('.navbar-toggle');
+        var menu = document.querySelector('.navbar-menu');
+        if (!toggle || !menu) return;
+
+        toggle.addEventListener('click', function() {
+            var expanded = toggle.classList.toggle('active');
+            menu.classList.toggle('active');
+            toggle.setAttribute('aria-expanded', expanded);
+        });
+
+        // Close menu when a link is clicked
+        menu.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                toggle.classList.remove('active');
+                menu.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
     }
 
     // Smooth scrolling for anchor links
@@ -254,7 +279,7 @@
                 this.reset();
                 
                 // In a real application, you would send this to your backend
-                console.log('Newsletter signup:', email);
+                if (DEBUG) console.log('Newsletter signup:', email);
             });
         }
     }
@@ -285,12 +310,12 @@
 
     function trackPageView() {
         // In a real application, you would integrate with Google Analytics, etc.
-        console.log('Page view tracked:', window.location.pathname);
+        if (DEBUG) console.log('Page view tracked:', window.location.pathname);
     }
 
     function trackEvent(category, action, label) {
         // In a real application, you would integrate with Google Analytics, etc.
-        console.log('Event tracked:', { category, action, label });
+        if (DEBUG) console.log('Event tracked:', { category, action, label });
     }
 
     // Utility functions

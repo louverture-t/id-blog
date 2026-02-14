@@ -1,14 +1,14 @@
 ---
 type: "post"
-title: "Your Amazing Article Title"
+title: "Emerging Infectious Disease Trends in 2025"
 date: "2025-10-10"
-author: "Disease Reporter"
+author: "ID Blog Team"
 category: "Breaking News"
-description: "Latest updates on Your Amazing Article Title"
+description: "An overview of the most significant emerging infectious disease trends observed in 2025"
 tags: ["infectious-disease", "health", "news"]
 ---
 
-# Your Amazing Article Title
+# Emerging Infectious Disease Trends in 2025
 
 Write your infectious disease news content here...
 
@@ -40,7 +40,7 @@ Recommendations for the public...
 
 ## References
 
-- [Source 1](https://example.com)
-- [Source 2](https://example.com)
+- [WHO Weekly Epidemiological Record](https://www.who.int/publications/journals/weekly-epidemiological-record)
+- [CDC Morbidity and Mortality Weekly Report](https://www.cdc.gov/mmwr/)
 - World Health Organization
 - Centers for Disease Control and Prevention

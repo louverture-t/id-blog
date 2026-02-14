@@ -39,7 +39,7 @@ Recommendations for the public...
 
 ## References
 
-- [Source 1](https://example.com)
-- [Source 2](https://example.com)
+- [WHO Tuberculosis Fact Sheet](https://www.who.int/news-room/fact-sheets/detail/tuberculosis)
+- [CDC Tuberculosis Resources](https://www.cdc.gov/tb/)
 - World Health Organization
 - Centers for Disease Control and Prevention

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Infectious Disease News</title>
+        <link>https://id-blog.github.io</link>
+        <description>Latest infectious disease news and updates</description>
+        <lastBuildDate>Sat, 14 Feb 2026 01:20:21 GMT</lastBuildDate>
+        <item>
+            <title>Emerging Infectious Disease Trends in 2025</title>
+            <link>https://id-blog.github.io/posts/your-amazing-article-title.html</link>
+            <description>An overview of the most significant emerging infectious disease trends observed in 2025</description>
+            <pubDate>Fri, 10 Oct 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Verification Post For Default Posts Dir</title>
+            <link>https://id-blog.github.io/posts/verification-post-for-default-posts-dir.html</link>
+            <description>Latest updates on Verification Post For Default Posts Dir</description>
+            <pubDate>Fri, 10 Oct 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Mpox Vaccination Campaign Shows Promising Results</title>
+            <link>https://id-blog.github.io/mpox-vaccination-campaign-shows-promising-results.html</link>
+            <description>Latest updates on Mpox Vaccination Campaign Shows Promising Results</description>
+            <pubDate>Sun, 05 Oct 2025 04:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>New Tuberculosis Drug Shows Promise</title>
+            <link>https://id-blog.github.io/posts/new-tuberculosis-drug-shows-promise.html</link>
+            <description>Latest updates on New Tuberculosis Drug Shows Promise</description>
+            <pubDate>Sun, 05 Oct 2025 04:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>COVID-19 Variant XBB.1.5 Shows Increased Transmissibility</title>
+            <link>https://id-blog.github.io/covid19-variant-xbb15.html</link>
+            <description>New research reveals that the COVID-19 variant XBB.1.5 demonstrates significantly higher transmissibility rates compared to previous strains</description>
+            <pubDate>Sun, 05 Oct 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Breakthrough in Malaria Vaccine Development</title>
+            <link>https://id-blog.github.io/malaria-vaccine-breakthrough.html</link>
+            <description>Scientists achieve 95% efficacy rate in Phase III trials of new malaria vaccine, offering hope for disease eradication</description>
+            <pubDate>Sat, 04 Oct 2025 00:00:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>
