@@ -220,7 +220,6 @@
     // Theme toggle functionality
     function initThemeToggle() {
         const themeToggle = document.createElement('button');
-        themeToggle.innerHTML = '🌓';
         themeToggle.className = 'theme-toggle';
         themeToggle.setAttribute('aria-label', 'Toggle dark mode');
         themeToggle.title = 'Toggle dark/light mode';
@@ -229,21 +228,43 @@
         if (navbar) {
             navbar.appendChild(themeToggle);
         }
-        
-        // Check for saved theme preference
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            document.body.setAttribute('data-theme', savedTheme);
+
+        function getPreferredTheme() {
+            var saved = localStorage.getItem('theme');
+            if (saved) return saved;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+            updateToggleIcon(theme);
+        }
+
+        function updateToggleIcon(theme) {
+            themeToggle.innerHTML = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Apply theme immediately
+        var currentTheme = getPreferredTheme();
+        applyTheme(currentTheme);
+
+        // Listen for OS-level theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            if (!localStorage.getItem('theme')) {
+                applyTheme(e.matches ? 'dark' : 'light');
+            }
+        });
         
         themeToggle.addEventListener('click', function() {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            var newTheme = isDark ? 'light' : 'dark';
             
-            document.body.setAttribute('data-theme', newTheme);
+            applyTheme(newTheme);
             localStorage.setItem('theme', newTheme);
-            
-            showNotification(`Switched to ${newTheme} mode`, 'info');
         });
     }
 

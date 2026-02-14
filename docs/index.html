@@ -7,6 +7,13 @@
     <title>Infectious Disease News Blog</title>
     <link rel="stylesheet" href="assets/css/main.min.css">
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <script>
+        (function() {
+            var t = localStorage.getItem('theme');
+            if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        })();
+    </script>
 </head>
 <body>
     <header class="header">

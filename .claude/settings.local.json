@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell.exe -NoProfile -Command \"[System.Media.SystemSounds]::Asterisk.Play\\(\\)\")",
+      "Bash(npm install:*)",
+      "Bash(npx jest --no-cache)",
+      "Bash(npx jest)",
+      "Bash(node index.js:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
